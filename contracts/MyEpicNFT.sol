@@ -35,18 +35,18 @@ contract MyEpicNFT is ERC721URIStorage {
         "Novorizonte"
     ];
     string[] secondWords = [
-        "Tigre",
-        "Tubarao",
-        "Tartaruga",
-        "Touro",
-        "Tatu",
-        "Tucano",
-        "Tamandua",
-        "Toupeira",
-        "Truta",
-        "Tainha",
-        "Texugo",
-        "Tatu"
+        "Flamingo",
+        "Formiga",
+        "Foca",
+        "Fuinha",
+        "Frango",
+        "Fragata",
+        "Faisao",
+        "Flautim",
+        "Francolim",
+        "Frisada",
+        "Fruxu",
+        "Furao"
     ];
     string[] thirdWords = [
         "Tabule",
@@ -62,6 +62,8 @@ contract MyEpicNFT is ERC721URIStorage {
         "Tomate",
         "Torrada"
     ];
+
+    event NewEpicNFTMinted(address sender, uint256 tokenId);
 
     constructor() ERC721("ChavesNFT", "CHAVO") {
         console.log("Meu contrato de NFT! Tchu-hu");
@@ -177,5 +179,7 @@ contract MyEpicNFT is ERC721URIStorage {
             newItemId,
             msg.sender
         );
+
+        emit NewEpicNFTMinted(msg.sender, newItemId);
     }
 }
