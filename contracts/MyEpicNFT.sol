@@ -11,6 +11,7 @@ import {Base64} from "./libraries/Base64.sol";
 contract MyEpicNFT is ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+    uint256 private _maxTokenId = 50;
 
     string svgPartOne =
         "<svg  xmlns='http://www.w3.org/2000/svg'  preserveAspectRatio='xMinYMin meet'  viewBox='0 0 350 350'>  <defs>    <linearGradient id='Gradient1'>      <stop class='stop1' offset='0%'/>      <stop class='stop2' offset='50%'/>      <stop class='stop3' offset='100%'/>    </linearGradient>  </defs>  <style>    .base {      fill: blue;      font-family: serif;      font-size: 20px;      color: #FFF;    }    .stop1 { stop-color: ";
@@ -131,6 +132,10 @@ contract MyEpicNFT is ERC721URIStorage {
     function makeAnEpicNFT() public {
         uint256 newItemId = _tokenIds.current();
 
+        require(
+            newItemId < _maxTokenId,
+            "Quem cunhou, mintou, quem nao mintou, nao cunha mais!"
+        );
         // Agora pegamos uma palavra aleatoria de cada uma das 3 listas.
         string memory first = pickRandomFirstWord(newItemId);
         string memory second = pickRandomSecondWord(newItemId);
@@ -190,5 +195,13 @@ contract MyEpicNFT is ERC721URIStorage {
             msg.sender
         );
         emit NewEpicNFTMinted(msg.sender, newItemId);
+    }
+
+    function getTotalNFTsMintedSoFar() public view returns (uint256) {
+        return _tokenIds.current();
+    }
+
+    function getNFTsLeftToMint() public view returns (uint256) {
+        return _maxTokenId - _tokenIds.current();
     }
 }
